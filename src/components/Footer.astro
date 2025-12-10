@@ -1,0 +1,50 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer>
+  <div class="container">
+    <div class="content">
+      <p>&copy; {currentYear} Jose Martel. All rights reserved.</p>
+      <div class="socials">
+        <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="#" target="_blank" rel="noopener noreferrer">Email</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    padding: 3rem 0;
+    margin-top: 4rem;
+    border-top: 1px solid #eee;
+    color: var(--text-light);
+    font-size: 0.9rem;
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .socials {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .socials a {
+    color: var(--text-color);
+    font-weight: 500;
+  }
+
+  @media (max-width: 600px) {
+    .content {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+  }
+</style>

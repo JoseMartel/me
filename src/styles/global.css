@@ -1,0 +1,71 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Pastel Palette */
+  --bg-color: #FDFCF8;
+  --text-color: #4A4A4A;
+  --text-light: #718096;
+  --accent-mint: #B8E0D2;
+  --accent-blue: #D6E2E9;
+  --accent-peach: #FAD2E1;
+  /* For subtle highlights */
+
+  --font-main: 'Inter', sans-serif;
+
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 8rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  scroll-behavior: smooth;
+  line-height: 1.6;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s ease;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--spacing-sm);
+  color: #1a1a1a;
+}
+
+section {
+  padding: var(--spacing-xl) var(--spacing-md);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Utilities */
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}

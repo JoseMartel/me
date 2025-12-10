@@ -1,0 +1,84 @@
+---
+
+---
+
+<section id="about" class="about">
+  <div class="container">
+    <h2>About Me</h2>
+    <div class="grid">
+      <div class="bio">
+        <p>
+          I am a Firmware Engineer passionate about bringing hardware to life.
+          With over 3 years of experience, I specialize in developing efficient
+          and robust embedded systems for IoT devices.
+        </p>
+        <p>
+          My approach combines a deep understanding of hardware with modern
+          software practices. I love solving complex problems in power
+          optimization and real-time connectivity.
+        </p>
+      </div>
+      <div class="skills">
+        <h3>Tech Stack</h3>
+        <ul>
+          <li><strong>Languages:</strong> C, C++, Python</li>
+          <li><strong>RTOS:</strong> FreeRTOS</li>
+          <li><strong>Protocols:</strong> AMQP, HTTP, CoAP, WiSUN</li>
+          <li><strong>Tools:</strong> Git, CMake</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background-color: #f4f7f6; /* Very subtle contrast */
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .bio p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--text-light);
+  }
+
+  .skills {
+    background: white;
+    padding: 2rem;
+    border-radius: 24px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  }
+
+  .skills h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .skills ul {
+    list-style: none;
+  }
+
+  .skills li {
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .skills li:last-child {
+    border-bottom: none;
+  }
+
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

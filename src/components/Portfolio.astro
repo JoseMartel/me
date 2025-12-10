@@ -1,0 +1,385 @@
+---
+const projects = [
+  {
+    title: "Ultra-Low Power IoT Sensor",
+    description:
+      "Design and implementation of a sensor node capable of operating for 5 years on a coin-cell battery. Deep sleep optimization on STM32.",
+    tags: ["C", "Low Power", "STM32"],
+    image: "/JOSE.png",
+    medium: "#",
+    github: "#",
+  },
+  {
+    title: "Industrial LoRaWAN Gateway",
+    description:
+      "Firmware for a robust gateway with cellular backup connectivity. Message queue management and OTA updates.",
+    tags: ["C++", "FreeRTOS", "LoRaWAN"],
+    image: "/JOSE.png",
+    medium: "#",
+    github: "#",
+  },
+  {
+    title: "Wearable Vital Signs Monitor",
+    description:
+      "Real-time signal processing algorithms to filter noise in PPG sensors. Secure BLE communication with mobile App.",
+    tags: ["DSP", "BLE", "Nordic nRF"],
+    image: "/JOSE.png",
+    medium: "#",
+    github: "#",
+  },
+  {
+    title: "Smart Home Hub Interface",
+    description:
+      "Centralized interface for home IoT device control. Integration with multiple protocols and real-time dashboard.",
+    tags: ["React", "MQTT", "Node.js"],
+    image: "/JOSE.png",
+    medium: "#",
+    github: "#",
+  },
+  {
+    title: "Drone Flight Controller",
+    description:
+      "Flight control system for autonomous drones. PID filter implementation and sensor fusion for stability.",
+    tags: ["C++", "Embedded", "Control Systems"],
+    image: "/JOSE.png",
+    medium: "#",
+    github: "#",
+  },
+];
+
+// Clone projects to create infinite loop effect (3 sets)
+const allProjects = [...projects, ...projects, ...projects];
+---
+
+<section id="projects">
+  <div class="header-row">
+    <h2>Featured Projects</h2>
+    <div class="carousel-controls">
+      <button id="prev-btn" aria-label="Previous project">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg
+        >
+      </button>
+      <button id="next-btn" aria-label="Next project">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg
+        >
+      </button>
+    </div>
+  </div>
+
+  <div class="carousel-container">
+    <div class="carousel" id="projects-carousel">
+      {
+        allProjects.map((project, index) => (
+          <article class="project-card" aria-hidden={index < 5 || index >= 10}>
+            <div class="card-image">
+              <img src={project.image} alt={project.title} loading="lazy" />
+            </div>
+            <div class="card-content">
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <div class="tags">
+                {project.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+              <div class="links">
+                <a
+                  href={project.medium}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="link-item"
+                >
+                  <span>Read on Medium</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <>
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                    </>
+                  </svg>
+                </a>
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="link-item"
+                >
+                  <span>View Code</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const carouselContainer = document.querySelector(".carousel-container");
+  const prevBtn = document.getElementById("prev-btn");
+  const nextBtn = document.getElementById("next-btn");
+
+  if (carouselContainer && prevBtn && nextBtn) {
+    const cardWidth = 400;
+    const gap = 32; // 2rem
+    const totalProjects = 5;
+    const singleSetWidth = (cardWidth + gap) * totalProjects;
+    let isScrolling: any = 0;
+
+    // Initialize scroll position to the middle set
+    // Wait for layout to be ready
+    requestAnimationFrame(() => {
+      carouselContainer.scrollLeft = singleSetWidth;
+    });
+
+    const handleScroll = () => {
+      // Clear our timeout throughout the scroll
+      window.clearTimeout(isScrolling);
+
+      // Set a timeout to run after scrolling ends
+      isScrolling = setTimeout(() => {
+        const currentScroll = carouselContainer.scrollLeft;
+
+        // If we are in the first set (clones), jump to middle set
+        if (currentScroll < singleSetWidth) {
+          carouselContainer.scrollLeft += singleSetWidth;
+        }
+        // If we are in the third set (clones), jump to middle set
+        else if (currentScroll >= singleSetWidth * 2) {
+          carouselContainer.scrollLeft -= singleSetWidth;
+        }
+      }, 60); // Wait for scroll to settle (approx 3-4 frames)
+    };
+
+    carouselContainer.addEventListener("scroll", handleScroll);
+
+    prevBtn.addEventListener("click", () => {
+      carouselContainer.scrollBy({
+        left: -(cardWidth + gap),
+        behavior: "smooth",
+      });
+    });
+
+    nextBtn.addEventListener("click", () => {
+      carouselContainer.scrollBy({ left: cardWidth + gap, behavior: "smooth" });
+    });
+  }
+</script>
+
+<style>
+  section {
+    overflow: hidden; /* Prevent horizontal scroll on body */
+  }
+
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-right: 2rem;
+  }
+
+  .carousel-controls {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .carousel-controls button {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-color);
+  }
+
+  .carousel-controls button:hover {
+    background: var(--text-color);
+    color: white;
+    border-color: var(--text-color);
+    transform: scale(1.05);
+  }
+
+  .carousel-container {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    /* Align first card with container but has breathing room */
+    padding-left: max(2rem, calc(50vw - 720px + 2rem));
+    padding-right: 2rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    scroll-snap-type: x mandatory; /* Enable snap */
+  }
+
+  .carousel-container::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+
+  .carousel {
+    display: flex;
+    gap: 2rem;
+    padding-bottom: 3rem; /* Space for shadow */
+    /* Standard padding for infinite scroll */
+    padding-right: 2rem;
+  }
+
+  .project-card {
+    background: white;
+    border-radius: 24px;
+    min-width: 400px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+    scroll-snap-align: start; /* Snap to start of card */
+  }
+
+  .project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  .card-image {
+    height: 240px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+  }
+
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .project-card:hover .card-image img {
+    transform: scale(1.05);
+  }
+
+  .card-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .card-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .card-content p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+  }
+
+  .tag {
+    background-color: var(--accent-blue);
+    color: #4a5568;
+    padding: 0.35rem 0.85rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .links {
+    display: flex;
+    gap: 1.5rem;
+    border-top: 1px solid #eee;
+    padding-top: 1.5rem;
+  }
+
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .link-item:hover {
+    color: #7fa1c3;
+  }
+
+  @media (max-width: 768px) {
+    .project-card {
+      min-width: 300px;
+      max-width: 300px;
+    }
+
+    .card-image {
+      height: 200px;
+    }
+
+    .carousel-container {
+      padding-left: 2rem;
+    }
+
+    .carousel {
+      padding-right: 2rem;
+    }
+  }
+</style>

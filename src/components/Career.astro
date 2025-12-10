@@ -1,0 +1,259 @@
+---
+
+---
+
+<section id="career" class="career-section">
+    <div class="container">
+        <h2>Career</h2>
+
+        <div class="timeline">
+            <!-- Timeline Line -->
+            <div class="timeline-line"></div>
+
+            <!-- Item 1: Omni-Electronica -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="info-card">
+                    <p class="role">Firmware Engineer</p>
+                    <p class="company">Omni-Electronica</p>
+                    <p class="period">2023 - Present</p>
+                    <p class="location">Sao Paulo, Brazil</p>
+                </div>
+            </div>
+
+            <!-- Item 2: Energy Automation -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="info-card">
+                    <p class="role">R&D Engineer</p>
+                    <p class="company">Energy Automation Technologies</p>
+                    <p class="period">2021 - 2023</p>
+                    <p class="location">Lima, Peru</p>
+                </div>
+            </div>
+
+            <!-- Item 3: UTEC -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="info-card">
+                    <p class="role">BSc. Electrical Engineer</p>
+                    <p class="company">
+                        Universidad de Ingenieria y Tecnologia
+                    </p>
+                    <p class="period">2018 - 2022</p>
+                    <p class="location">Lima, Peru</p>
+                </div>
+            </div>
+
+            <!-- Item 4: Tecsup -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="info-card">
+                    <p class="role">
+                        Technician Electronics & Industrial Automation
+                    </p>
+                    <p class="company">TECSUP</p>
+                    <p class="period">2014 - 2017</p>
+                    <p class="location">Lima, Peru</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .career-section {
+        padding: 4rem 1rem;
+        /* background-color: #f9f9f9; Removed to match global bg */
+        overflow: hidden;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        color: #333;
+    }
+
+    .timeline {
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 2rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .timeline-line {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background-color: #ddd;
+        transform: translateX(-50%);
+        z-index: 1;
+    }
+
+    .timeline-item {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        opacity: 0; /* Initial state for animation */
+        transform: translateY(20px);
+        transition:
+            opacity 0.6s ease-out,
+            transform 0.6s ease-out;
+    }
+
+    .timeline-dot {
+        width: 16px;
+        height: 16px;
+        background-color: #333;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        box-shadow: 0 0 0 2px #ddd;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 3;
+    }
+
+    .info-card {
+        background: white;
+        padding: 1.2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        width: 45%; /* Cards take up slightly less than half width */
+        text-align: left;
+        position: relative;
+    }
+
+    /* Alternating layout */
+    .timeline-item:nth-child(odd) .info-card {
+        margin-right: auto; /* Push to left */
+        text-align: right;
+    }
+
+    .timeline-item:nth-child(even) .info-card {
+        margin-left: auto; /* Push to right */
+        text-align: left;
+    }
+
+    /* Arrow pointers */
+    .info-card::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        transform: translateY(-50%);
+    }
+
+    .timeline-item:nth-child(odd) .info-card::after {
+        right: -10px;
+        border-width: 10px 0 10px 10px;
+        border-color: transparent transparent transparent white;
+    }
+
+    .timeline-item:nth-child(even) .info-card::after {
+        left: -10px;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent white transparent transparent;
+    }
+
+    .info-card p {
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    .role {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.2rem !important;
+    }
+
+    .company {
+        font-size: 0.8rem;
+        color: #555;
+        font-weight: 500;
+        margin-top: 0.2rem;
+    }
+
+    .period {
+        font-size: 0.75rem;
+        color: #777;
+        margin-top: 0.3rem !important;
+    }
+
+    .location {
+        font-size: 0.75rem;
+        color: #999;
+        margin-top: 0.1rem !important;
+        font-style: italic;
+    }
+
+    /* Animation class */
+    .timeline-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+        .timeline-line {
+            left: 20px;
+        }
+
+        .timeline-dot {
+            left: 20px;
+        }
+
+        .info-card {
+            width: calc(100% - 60px); /* Full width minus offset */
+            margin-left: 60px !important; /* Always push right */
+            margin-right: 0 !important;
+            text-align: left !important;
+        }
+
+        .timeline-item:nth-child(odd) .info-card::after,
+        .timeline-item:nth-child(even) .info-card::after {
+            left: -10px;
+            right: auto;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent white transparent transparent;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const items = document.querySelectorAll(".timeline-item");
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                    }
+                });
+            },
+            { threshold: 0.2 },
+        );
+
+        items.forEach((item) => {
+            observer.observe(item);
+        });
+    });
+</script>
