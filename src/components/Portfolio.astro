@@ -84,7 +84,7 @@ const allProjects = [...projects, ...projects, ...projects];
     </div>
   </div>
 
-  <div class="carousel-container">
+  <div class="carousel-container" id="carousel-container">
     <div class="carousel" id="projects-carousel">
       {
         allProjects.map((project, index) => (
@@ -156,53 +156,100 @@ const allProjects = [...projects, ...projects, ...projects];
 </section>
 
 <script>
-  const carouselContainer = document.querySelector(".carousel-container");
+  const carouselContainer = document.getElementById("carousel-container");
   const prevBtn = document.getElementById("prev-btn");
   const nextBtn = document.getElementById("next-btn");
 
   if (carouselContainer && prevBtn && nextBtn) {
-    const cardWidth = 400;
-    const gap = 32; // 2rem
     const totalProjects = 5;
-    const singleSetWidth = (cardWidth + gap) * totalProjects;
     let isScrolling: any = 0;
+    let isRepositioning = false;
+
+    // Dynamically compute card width + gap from the actual DOM
+    function getCardStep(): number {
+      const firstCard = carouselContainer.querySelector(".project-card") as HTMLElement | null;
+      if (!firstCard) return 332; // fallback
+      const style = window.getComputedStyle(firstCard);
+      const cardW = firstCard.offsetWidth;
+      // The gap is on the flex container (.carousel), not on the card itself
+      const carousel = carouselContainer.querySelector(".carousel") as HTMLElement | null;
+      const gap = carousel ? parseFloat(window.getComputedStyle(carousel).gap) || 24 : 24;
+      return cardW + gap;
+    }
+
+    function getSingleSetWidth(): number {
+      return getCardStep() * totalProjects;
+    }
 
     // Initialize scroll position to the middle set
-    // Wait for layout to be ready
     requestAnimationFrame(() => {
-      carouselContainer.scrollLeft = singleSetWidth;
+      // Disable smooth scrolling for initial positioning
+      carouselContainer.style.scrollBehavior = "auto";
+      carouselContainer.scrollLeft = getSingleSetWidth();
+      // Re-enable after a frame
+      requestAnimationFrame(() => {
+        carouselContainer.style.scrollBehavior = "";
+      });
     });
 
     const handleScroll = () => {
-      // Clear our timeout throughout the scroll
+      if (isRepositioning) return;
+
       window.clearTimeout(isScrolling);
 
-      // Set a timeout to run after scrolling ends
       isScrolling = setTimeout(() => {
         const currentScroll = carouselContainer.scrollLeft;
+        const singleSetWidth = getSingleSetWidth();
 
         // If we are in the first set (clones), jump to middle set
-        if (currentScroll < singleSetWidth) {
+        if (currentScroll < singleSetWidth * 0.5) {
+          isRepositioning = true;
+          carouselContainer.style.scrollBehavior = "auto";
           carouselContainer.scrollLeft += singleSetWidth;
+          requestAnimationFrame(() => {
+            carouselContainer.style.scrollBehavior = "";
+            isRepositioning = false;
+          });
         }
         // If we are in the third set (clones), jump to middle set
         else if (currentScroll >= singleSetWidth * 2) {
+          isRepositioning = true;
+          carouselContainer.style.scrollBehavior = "auto";
           carouselContainer.scrollLeft -= singleSetWidth;
+          requestAnimationFrame(() => {
+            carouselContainer.style.scrollBehavior = "";
+            isRepositioning = false;
+          });
         }
-      }, 60); // Wait for scroll to settle (approx 3-4 frames)
+      }, 100);
     };
 
     carouselContainer.addEventListener("scroll", handleScroll);
 
     prevBtn.addEventListener("click", () => {
+      const step = getCardStep();
       carouselContainer.scrollBy({
-        left: -(cardWidth + gap),
+        left: -step,
         behavior: "smooth",
       });
     });
 
     nextBtn.addEventListener("click", () => {
-      carouselContainer.scrollBy({ left: cardWidth + gap, behavior: "smooth" });
+      const step = getCardStep();
+      carouselContainer.scrollBy({ left: step, behavior: "smooth" });
+    });
+
+    // Recalculate on resize
+    let resizeTimeout: any;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        carouselContainer.style.scrollBehavior = "auto";
+        carouselContainer.scrollLeft = getSingleSetWidth();
+        requestAnimationFrame(() => {
+          carouselContainer.style.scrollBehavior = "";
+        });
+      }, 150);
     });
   }
 </script>
@@ -365,21 +412,119 @@ const allProjects = [...projects, ...projects, ...projects];
   }
 
   @media (max-width: 768px) {
+    .header-row {
+      padding-right: 0;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    .carousel-controls button {
+      width: 40px;
+      height: 40px;
+    }
+
+    .carousel-controls button svg {
+      width: 20px;
+      height: 20px;
+    }
+
     .project-card {
-      min-width: 300px;
-      max-width: 300px;
+      min-width: 280px;
+      max-width: 280px;
+      border-radius: 16px;
     }
 
     .card-image {
-      height: 200px;
+      height: 180px;
+    }
+
+    .card-content {
+      padding: 1.25rem;
+    }
+
+    .card-content h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-content p {
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .tags {
+      margin-bottom: 1.25rem;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.65rem;
+    }
+
+    .links {
+      gap: 1rem;
+      padding-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .link-item {
+      font-size: 0.85rem;
+    }
+
+    .link-item svg {
+      width: 16px;
+      height: 16px;
     }
 
     .carousel-container {
-      padding-left: 2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
 
     .carousel {
-      padding-right: 2rem;
+      gap: 1rem;
+      padding-right: 1rem;
+      padding-bottom: 2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header-row {
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+    }
+
+    .project-card {
+      min-width: 260px;
+      max-width: 260px;
+    }
+
+    .card-image {
+      height: 150px;
+    }
+
+    .card-content {
+      padding: 1rem;
+    }
+
+    .card-content h3 {
+      font-size: 1.05rem;
+    }
+
+    .card-content p {
+      font-size: 0.82rem;
+    }
+
+    .carousel {
+      gap: 0.75rem;
     }
   }
 </style>

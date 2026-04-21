@@ -96,6 +96,10 @@
         font-size: 1rem;
         font-family: inherit;
         transition: border-color 0.3s;
+        /* Prevent iOS zoom on focus */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
     }
 
     input:focus,
@@ -113,9 +117,60 @@
         font-size: 1rem;
         cursor: pointer;
         transition: background-color 0.3s;
+        -webkit-appearance: none;
     }
 
     .submit-btn:hover {
         background-color: #555;
+    }
+
+    @media (max-width: 768px) {
+        .contact-section {
+            padding: 3rem 1.25rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        p {
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form {
+            gap: 1.25rem;
+        }
+
+        input,
+        textarea {
+            padding: 0.75rem;
+            font-size: 16px; /* Prevents iOS zoom on input focus */
+            border-radius: 8px;
+        }
+
+        .submit-btn {
+            padding: 0.9rem;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .contact-section {
+            padding: 2.5rem 1rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+
+        label {
+            font-size: 0.9rem;
+        }
     }
 </style>
